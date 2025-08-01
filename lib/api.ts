@@ -8,14 +8,17 @@ interface FetchHttpResponse {
 
 interface FetchParams {
     search?: string,
+    tag?:string,
     page: number,
 }
 
-export async function fetchNotes(searchText: string, page: number):Promise<FetchHttpResponse> {
+export async function fetchNotes(searchText: string, page: number, tag?:string,):Promise<FetchHttpResponse> {
     const params:FetchParams = {
-    page,
+        page,
   };
-
+    if (tag !== "") {
+        params.tag = tag;
+  }
   if (searchText.trim() !== "") {
     params.search = searchText.trim();
   }
@@ -63,5 +66,19 @@ export async function fetchNoteById(id: string): Promise<Note>{
              Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
         }
     })
+    return response.data;
+}
+
+export async function fetchNotesByTag(tag?:string):Promise<FetchHttpResponse> {
+  
+    const response = await axios.get<FetchHttpResponse>("https://notehub-public.goit.study/api/notes", {
+        params: {
+            tag,
+            perPage: 12,
+        },
+        headers: {
+             Authorization: `Bearer ${process.env.NEXT_PUBLIC_NOTEHUB_TOKEN}`,
+        }
+    });
     return response.data;
 }
