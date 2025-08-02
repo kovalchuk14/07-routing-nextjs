@@ -7,10 +7,12 @@ type Props = {
 };
 
 const Modal = ({ children,onClose }: Props) => {
-  
+  const stopPropagation = (e: React.MouseEvent) => e.stopPropagation();
+
+
   return (
     <div className={css.backdrop} onClick={onClose}>
-      <div className={ css.modal}>
+      <div className={ css.modal} onClick={stopPropagation}>
         {children}
         <button onClick={onClose}>Close</button>
       </div>
