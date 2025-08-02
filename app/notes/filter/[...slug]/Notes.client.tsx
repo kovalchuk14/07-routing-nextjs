@@ -11,13 +11,15 @@ import Pagination from "@/components/Pagination/Pagination";
 import SearchBox from "@/components/SearchBox/SearchBox";
 
 interface NotesClientProps {
-  tag?:string,
+  initialSearch: string,
+  initialPage: number,
+  tag: string|undefined,
 }
 
 
-export default function NotesClient({tag}:NotesClientProps) {
-    const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+export default function NotesClient({initialSearch,initialPage,tag}:NotesClientProps) {
+    const [searchQuery, setSearchQuery] = useState(initialSearch);
+  const [currentPage, setCurrentPage] = useState(initialPage);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const handleChange = useDebouncedCallback(
     (value: string) => {
@@ -28,8 +30,8 @@ export default function NotesClient({tag}:NotesClientProps) {
   );
 
   const { data } = useQuery({
-    queryKey: ["request",searchQuery, currentPage],
-    queryFn: () => fetchNotes(searchQuery,currentPage, tag),
+    queryKey: ["notes",searchQuery, tag, currentPage],
+    queryFn: () => fetchNotes(searchQuery, tag, currentPage),
     placeholderData: keepPreviousData,
   });
 
@@ -49,7 +51,7 @@ export default function NotesClient({tag}:NotesClientProps) {
       </header>
       {(data && data?.notes.length > 0) ? (<NoteList notes={data.notes}/>) : (<p>No notes, try again later</p>)}
       {isModalOpen && <Modal onClose={modalClose}>
-        <NoteForm onClose={modalClose} queryKey={["request",searchQuery, currentPage]}/>
+        <NoteForm onClose={modalClose} queryKey={["notes",searchQuery,tag, currentPage]}/>
       </Modal>
       }
     </div>

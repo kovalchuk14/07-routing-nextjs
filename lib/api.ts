@@ -8,17 +8,16 @@ interface FetchHttpResponse {
 
 interface FetchParams {
     search?: string,
-    tag?:string,
+    tag:string|undefined,
     page: number,
 }
 
-export async function fetchNotes(searchText: string, page: number, tag?:string,):Promise<FetchHttpResponse> {
+export async function fetchNotes(searchText: string, tag:string|undefined, page: number, ):Promise<FetchHttpResponse> {
     const params:FetchParams = {
         page,
-  };
-    if (tag !== "") {
-        params.tag = tag;
-  }
+        tag
+    };
+    
   if (searchText.trim() !== "") {
     params.search = searchText.trim();
   }

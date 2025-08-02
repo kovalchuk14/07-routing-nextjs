@@ -14,7 +14,7 @@ const initialValues: NoteInputValues = {
 
 interface NoteFormProps {
     onClose: () => void,
-    queryKey: (string | number)[],
+    queryKey: (string | number|undefined)[],
 }
 
 const validationSchema = Yup.object().shape({

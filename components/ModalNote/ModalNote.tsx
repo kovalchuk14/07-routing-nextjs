@@ -1,21 +1,18 @@
 'use client';
 import css from "./ModalNote.module.css";
-import { useRouter } from 'next/navigation';
 
 type Props = {
   children: React.ReactNode;
+   onClose: () => void;
 };
 
-const Modal = ({ children }: Props) => {
-  const router = useRouter();
+const Modal = ({ children,onClose }: Props) => {
   
-  const close = () => router.back();
-
   return (
-    <div className={ css.backdrop}>
+    <div className={css.backdrop} onClick={onClose}>
       <div className={ css.modal}>
         {children}
-        <button onClick={close}>Close</button>
+        <button onClick={onClose}>Close</button>
       </div>
     </div>
   );
