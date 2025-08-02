@@ -7,16 +7,15 @@ import { fetchNotes } from "@/lib/api";
 import NotesClient from "./Notes.client";
 
 type Props = {
-  params: Promise<{ slug: string[] }>;
-  q?: string,
-  page?: string,
+ params: { slug: string[] };
+  searchParams?: { q?: string; page?: string };
 };
 
-async function App({ params,q,page }: Props) {
+async function App({ params, searchParams }: Props) {
   const { slug } = await params;
-  const category = slug[0] === 'All' ? undefined : slug[0];
-  const searchQuery = q ?? "";
-  const currentPage = Number(page) || 1;
+  const category = params.slug[0] === 'All' ? undefined : params.slug[0];
+  const searchQuery = searchParams?.q ?? "";
+  const currentPage = Number(searchParams?.page) || 1;
 
   const queryClient = new QueryClient();
 
