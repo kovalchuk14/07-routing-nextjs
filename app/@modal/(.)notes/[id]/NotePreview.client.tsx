@@ -30,7 +30,6 @@ const router = useRouter();
     return (
       <ModalNote onClose={close}>
         <p>Failed to load note. Please try again.</p>
-        <button onClick={close}>Close</button>
       </ModalNote>
     );
   }

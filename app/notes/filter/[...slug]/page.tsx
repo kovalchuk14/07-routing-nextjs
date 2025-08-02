@@ -8,14 +8,13 @@ import NotesClient from "./Notes.client";
 
 type Props = {
   params: Promise<{ slug: string[] }>;
-  searchParams?: { q?: string; page?: string };
 };
 
-async function App({ params, searchParams }: Props) {
+async function App({ params}: Props) {
   const { slug } = await params;
   const category = slug[0] === 'All' ? undefined : slug[0];
-  const searchQuery = searchParams?.q ?? "";
-  const currentPage = Number(searchParams?.page) || 1;
+  const searchQuery = "";
+  const currentPage = 1;
 
   const queryClient = new QueryClient();
 
