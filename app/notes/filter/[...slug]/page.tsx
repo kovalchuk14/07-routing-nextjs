@@ -20,7 +20,7 @@ async function App({ params,q,page }: Props) {
 
   const queryClient = new QueryClient();
 
-  const initData = await queryClient.prefetchQuery({
+  await queryClient.prefetchQuery({
     queryKey: ["notes", searchQuery,category, currentPage ],
     queryFn: () => fetchNotes(searchQuery, category, currentPage),
   });
